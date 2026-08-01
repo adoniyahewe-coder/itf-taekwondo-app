@@ -1,32 +1,58 @@
 import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
 
-export default async function PatternDetail({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const { data: pattern } = await supabase.from('patterns').select('*').eq('order_no', id).single();
+export default async function PatternDetail({ params }: { params: Promise<{ id: string }> }) {
+  // We must "await" the params in the new version of Next.js
+  const resolvedParams = await params;
+  const id = resolvedParams.id;
 
-  if (!pattern) return <div className="p-10 text-center">መረጃው አልተገኘም...</div>;
+  // Get data for this specific pattern from Supabase
+  const { data: pattern } = await supabase
+    .from('patterns')
+    .select('*')
+    .eq('order_no', id)
+    .single();
+
+  if (!pattern) {
+    return (
+      <div className="p-20 text-center">
+        <p>መረጃው አልተገኘም (No Data Found)</p>
+        <Link href="/" className="text-red-600 underline">ወደ ዋና ገጽ ተመለስ</Link>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-white">
-      <div className="bg-red-700 p-4 text-white flex items-center shadow-md">
-        <Link href="/" className="mr-4 font-bold p-2 bg-red-800 rounded">← ተመለስ</Link>
+      {/* Header */}
+      <div className="bg-red-800 p-4 text-white flex items-center">
+        <Link href="/" className="mr-4 bg-red-900 px-3 py-1 rounded">← ተመለስ</Link>
         <h1 className="text-xl font-bold">{pattern.name_en} ({pattern.name_am})</h1>
       </div>
 
-      <div className="flex flex-col md:row h-[calc(100vh-72px)]">
+      {/* Split Screen Layout */}
+      <div className="flex flex-col md:flex-row h-[calc(100vh-64px)]">
+        
+        {/* Left: Video */}
         <div className="w-full md:w-1/2 bg-black flex items-center justify-center">
           {pattern.video_url ? (
-            <iframe className="w-full aspect-video" src={pattern.video_url.replace("watch?v=", "embed/")} allowFullScreen></iframe>
+            <iframe 
+              className="w-full h-full aspect-video"
+              src={pattern.video_url.replace("watch?v=", "embed/")}
+              allowFullScreen
+            ></iframe>
           ) : (
-            <div className="text-white text-center p-10">የቪዲዮ ሊንክ አልተገኘም</div>
+            <p className="text-white">ቪዲዮ አልተገኘም</p>
           )}
         </div>
-        <div className="w-full md:w-1/2 p-8 overflow-y-auto bg-gray-50">
-          <h2 className="text-3xl font-bold text-red-700 mb-4 underline">Technical Description</h2>
+
+        {/* Right: Info */}
+        <div className="w-full md:w-1/2 p-6 overflow-y-auto">
+          <h2 className="text-2xl font-bold text-red-800 mb-4 italic">Technical Description</h2>
           <p className="text-gray-700 text-lg leading-relaxed">{pattern.meaning_am}</p>
-          <div className="mt-6 p-4 bg-white border-l-4 border-red-700 shadow-sm">
-            <p className="font-bold">የእንቅስቃሴ ብዛት (Moves): {pattern.move_count}</p>
+          
+          <div className="mt-10 p-4 bg-gray-100 rounded-lg border-l-4 border-red-800">
+            <p className="font-bold">Moves: {pattern.move_count}</p>
           </div>
         </div>
       </div>
