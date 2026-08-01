@@ -2,95 +2,64 @@ import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
 
 export default async function Home() {
-  // Fetch all 24 patterns from Supabase
-  const { data: patterns, error } = await supabase
-    .from('patterns')
-    .select('*')
-    .order('order_no', { ascending: true });
+  const { data: patterns } = await supabase.from('patterns').select('*').order('order_no', { ascending: true });
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-20">
-      {/* Header Section */}
-      <header className="bg-red-700 text-white py-10 px-6 text-center shadow-lg border-b-4 border-black">
-        <h1 className="text-4xl md:text-5xl font-black tracking-tighter">ITF TAEKWON-DO</h1>
-        <p className="mt-2 text-xl md:text-2xl font-light opacity-90">የ24ቱ ቱል መማሪያ መተግበሪያ</p>
+    <main className="min-h-screen bg-white">
+      {/* Premium Header */}
+      <header className="bg-black text-white py-14 px-6 text-center border-b-8 border-red-700">
+        <h1 className="text-5xl font-black tracking-tighter italic">ITF ETHIOPIA</h1>
+        <p className="mt-2 text-red-500 font-bold tracking-widest uppercase text-sm">Official Technical Portal</p>
       </header>
 
-      <div className="max-w-5xl mx-auto px-4 mt-8">
-        
-        {/* Evolution & Description Section (ታሪክ እና እድገት) */}
-        <section className="bg-white p-8 rounded-2xl shadow-md mb-12 border border-gray-100">
-          <h2 className="text-2xl md:text-3xl font-bold text-red-700 mb-6 border-b-2 border-red-50 pb-2">
-            Description & Evolution (ታሪክ እና መግለጫ)
-          </h2>
-          <div className="space-y-6 text-gray-800 text-lg leading-relaxed">
-            <p>
-              <strong className="text-red-700">ቴኳንዶ (Taekwon-Do):</strong> በሶስት ቃላት የተገነባ ጥበብ ነው። 
-              <strong> ቴ (Tae)</strong> ማለት በእግር መምታት፣ 
-              <strong> ኳን (Kwon)</strong> ማለት በቡጢ መምታት፣ 
-              <strong> ዶ (Do)</strong> ማለት ደግሞ የጥበብ መንገድ ወይም ስነ-ምግባር ማለት ነው።
-            </p>
-            <p className="bg-gray-50 p-5 rounded-xl italic border-l-8 border-red-700">
-              ዘመናዊው አይ.ቲ.ኤፍ (ITF) ቴኳንዶ በ1955 ዓ.ም በጄነራል ቾይ ሆንግ ሂ የተመሰረተ ሲሆን፣ 
-              በውስጡም የሰው ልጅን እድገት እና የኮሪያን ታሪክ የሚወክሉ <strong>24 ቱል (Patterns)</strong> ይዟል።
-            </p>
-          </div>
+      <div className="max-w-6xl mx-auto p-6">
+        {/* Navigation Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-12 mb-12">
+           <Link href="#history" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-red-700 hover:scale-105 transition-all text-center">
+             <span className="text-2xl block mb-2">📜</span>
+             <h3 className="font-bold">Evolution (ታሪክ)</h3>
+           </Link>
+           <Link href="/library" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-black hover:scale-105 transition-all text-center">
+             <span className="text-2xl block mb-2">🥋</span>
+             <h3 className="font-bold">Library (ቴክኒኮች)</h3>
+           </Link>
+           <Link href="#patterns" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-red-700 hover:scale-105 transition-all text-center">
+             <span className="text-2xl block mb-2">👊</span>
+             <h3 className="font-bold">24 Patterns (ቱል)</h3>
+           </Link>
+        </div>
+
+        {/* History Section */}
+        <section id="history" className="mb-16 bg-gray-50 p-8 rounded-3xl border border-gray-100">
+          <h2 className="text-3xl font-black text-black mb-6 uppercase">ITF Evolution</h2>
+          <p className="text-gray-700 leading-relaxed text-lg italic border-l-4 border-red-700 pl-4">
+            "ቴኳንዶ ማለት በእግር መምታት (Tae)፣ በቡጢ መምታት (Kwon) እና የጥበብ መንገድ (Do) ማለት ነው።"
+          </p>
+          <p className="mt-4 text-gray-600">
+            ዘመናዊው አይ.ቲ.ኤፍ (ITF) ቴኳንዶ በ1955 ዓ.ም በጄነራል ቾይ ሆንግ ሂ የተመሰረተ ሲሆን... (Add more history here)
+          </p>
         </section>
 
-        {/* Patterns List Title */}
-        <div className="flex items-center mb-8">
-          <div className="h-1 flex-grow bg-gray-200"></div>
-          <h3 className="px-4 text-2xl font-black text-gray-900 tracking-widest uppercase">
-            The 24 Patterns
-          </h3>
-          <div className="h-1 flex-grow bg-gray-200"></div>
-        </div>
-
-        {/* Error State */}
-        {error && (
-          <div className="p-4 bg-red-100 text-red-700 rounded-lg mb-6">
-            ዳታቤዙን ማግኘት አልተቻለም (Database connection error)
-          </div>
-        )}
-
-        {/* Patterns Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {patterns?.map((tul) => (
-            <Link key={tul.id} href={`/patterns/${tul.order_no}`}>
-              <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl hover:border-red-600 transition-all cursor-pointer group active:scale-95">
-                <div className="p-5 flex justify-between items-center bg-white group-hover:bg-red-50">
-                  <div className="flex items-center">
-                    <span className="text-2xl font-black text-red-700 mr-4">{tul.order_no}</span>
-                    <div>
-                      <h4 className="text-lg font-bold text-gray-900 group-hover:text-red-800">{tul.name_en}</h4>
-                      <p className="text-sm text-gray-500 font-medium">{tul.name_am}</p>
+        {/* Patterns List */}
+        <section id="patterns">
+          <h2 className="text-3xl font-black mb-8 uppercase text-center">The 24 Patterns</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {patterns?.map((p) => (
+              <Link key={p.id} href={`/patterns/${p.order_no}`}>
+                <div className="group bg-white border border-gray-200 p-5 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer">
+                  <div className="flex justify-between items-center">
+                    <span className="text-4xl font-black opacity-10 group-hover:opacity-100 transition-opacity">{p.order_no}</span>
+                    <div className="text-right">
+                      <h4 className="font-bold uppercase tracking-tighter">{p.name_en}</h4>
+                      <p className="text-xs text-red-600 font-bold">{p.name_am}</p>
                     </div>
                   </div>
-                  <div className="text-red-700 opacity-0 group-hover:opacity-100 transition-opacity">
-                    →
-                  </div>
                 </div>
-                <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex justify-between text-xs font-bold text-gray-400">
-                  <span>MOVES: {tul.move_count}</span>
-                  <span className="text-red-600 uppercase">ቪዲዮ እይ</span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-
-        {/* If database is empty */}
-        {patterns?.length === 0 && (
-          <p className="text-center text-gray-400 py-20 italic">
-            ምንም ቱል አልተገኘም (No patterns found in database).
-          </p>
-        )}
+              </Link>
+            ))}
+          </div>
+        </section>
       </div>
-
-      {/* Simple Footer */}
-      <footer className="mt-20 py-10 border-t border-gray-200 text-center text-gray-400 text-sm">
-        <p>© ITF Taekwondo Ethiopia App</p>
-      </footer>
     </main>
   );
 }
