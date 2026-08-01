@@ -2,32 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --tkd-red: #b91c1c;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
   background-color: #000000;
   color: #ffffff;
-  /* አፑ በስልክ ላይ እንዳይወዝወዝ (Fixed App Feel) */
-  overscroll-behavior-y: none;
-  font-family: sans-serif;
-}
-
-/* ለቴክኒክ መመሪያው (Scrollbar) */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* የአፕ ካርዶች ስታይል */
-.app-button {
-  background: #111111;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2rem;
-  transition: all 0.3s ease;
-}
-
-.app-button:active {
-  transform: scale(0.95);
-  background: #b91c1c;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Makes it feel like a locked App, not a website */
 }

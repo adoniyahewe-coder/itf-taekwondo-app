@@ -1,49 +1,52 @@
 import Link from 'next/link';
 
-export default function Home() {
+export default function AppDashboard() {
   return (
-    <main className="h-screen w-full bg-black text-white flex flex-col justify-between p-8 pb-16 overflow-hidden">
+    <main className="fixed inset-0 bg-black flex flex-col justify-between p-8 pb-14 text-white">
       
-      {/* App Branding */}
-      <div className="mt-12 text-center">
+      {/* App Header */}
+      <div className="mt-10 text-center">
         <h1 className="text-5xl font-black italic tracking-tighter uppercase leading-none">
           ITF <span className="text-red-600">ETHIOPIA</span>
         </h1>
-        <p className="text-red-500 font-bold tracking-[0.4em] text-[10px] mt-3 uppercase">Mastery & Tradition</p>
+        <p className="text-red-600 font-bold tracking-[0.4em] text-[10px] mt-4 uppercase">
+          Elite Training Portal
+        </p>
       </div>
 
-      {/* High-Standard App Menu */}
-      <div className="w-full max-w-sm mx-auto space-y-4">
+      {/* App Navigation (The 3 Pillars) */}
+      <div className="flex flex-col gap-5 w-full max-w-sm mx-auto">
         
-        <Link href="/history" className="app-button w-full p-6 flex items-center justify-between shadow-2xl">
+        <Link href="/history" className="bg-zinc-900 border border-white/5 p-7 rounded-[2.5rem] flex items-center justify-between active:scale-95 active:bg-zinc-800 transition-all shadow-2xl">
           <div className="text-left">
-            <h2 className="text-xl font-bold uppercase tracking-tight">Evolution</h2>
-            <p className="text-zinc-500 text-[10px]">የአይ.ቲ.ኤፍ ታሪክ እና እድገት</p>
+            <h2 className="text-2xl font-black uppercase tracking-tight">Evolution</h2>
+            <p className="text-zinc-500 text-[10px] font-bold">ITF HISTORY & TRADITION</p>
           </div>
-          <span className="text-2xl">📜</span>
+          <span className="text-3xl">📜</span>
         </Link>
 
-        <Link href="/patterns" className="app-button w-full p-6 flex items-center justify-between shadow-2xl border-l-4 border-l-red-600">
+        <Link href="/patterns" className="bg-red-700 p-7 rounded-[2.5rem] flex items-center justify-between active:scale-95 active:bg-red-800 transition-all shadow-2xl">
           <div className="text-left">
-            <h2 className="text-xl font-bold uppercase tracking-tight">24 Patterns</h2>
-            <p className="text-zinc-500 text-[10px]">የ24ቱ ቱል መማሪያ (ቪዲዮ)</p>
+            <h2 className="text-2xl font-black uppercase tracking-tight">Patterns</h2>
+            <p className="text-red-200 text-[10px] font-bold">24 TUL VIDEO GUIDE</p>
           </div>
-          <span className="text-2xl">🥋</span>
+          <span className="text-3xl text-white">🥋</span>
         </Link>
 
-        <Link href="/library" className="app-button w-full p-6 flex items-center justify-between shadow-2xl">
+        <Link href="/library" className="bg-zinc-900 border border-white/5 p-7 rounded-[2.5rem] flex items-center justify-between active:scale-95 active:bg-zinc-800 transition-all shadow-2xl">
           <div className="text-left">
-            <h2 className="text-xl font-bold uppercase tracking-tight">Library</h2>
-            <p className="text-zinc-500 text-[10px]">ቴክኒኮች እና አቋቋም</p>
+            <h2 className="text-2xl font-black uppercase tracking-tight">Library</h2>
+            <p className="text-zinc-500 text-[10px] font-bold">STANCES & TECHNIQUES</p>
           </div>
-          <span className="text-2xl">👊</span>
+          <span className="text-3xl">👊</span>
         </Link>
 
       </div>
 
-      {/* App Version Info */}
-      <div className="text-center opacity-30">
-        <p className="text-[8px] font-bold tracking-widest uppercase">ITF Ethiopia App v1.0</p>
+      {/* Footer Branding */}
+      <div className="text-center">
+        <div className="h-[2px] w-12 bg-zinc-800 mx-auto mb-4"></div>
+        <p className="text-[9px] text-zinc-600 font-black tracking-widest uppercase">Version 1.1.0 • Stable App</p>
       </div>
 
     </main>
