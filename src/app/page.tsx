@@ -1,49 +1,33 @@
 import { supabase } from '@/lib/supabaseClient';
+import Link from 'next/link';
 
-export default async function Home() {
-  const { data: patterns } = await supabase
-    .from('patterns')
-    .select('*')
-    .order('order_no', { ascending: true });
+export default async function PatternDetail({ params }: { params: { id: string } }) {
+  const { id } = params;
+  const { data: pattern } = await supabase.from('patterns').select('*').eq('order_no', id).single();
+
+  if (!pattern) return <div className="p-10 text-center">መረጃው አልተገኘም...</div>;
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-red-700 text-white p-8 text-center shadow-md">
-        <h1 className="text-4xl font-bold">ITF Taekwondo Ethiopia</h1>
-        <p className="mt-2 text-xl font-light">የ24ቱ ቱል መማሪያ መተግበሪያ</p>
-      </header>
+    <main className="min-h-screen bg-white">
+      <div className="bg-red-700 p-4 text-white flex items-center shadow-md">
+        <Link href="/" className="mr-4 font-bold p-2 bg-red-800 rounded">← ተመለስ</Link>
+        <h1 className="text-xl font-bold">{pattern.name_en} ({pattern.name_am})</h1>
+      </div>
 
-      <div className="max-w-4xl mx-auto p-6">
-        <section className="bg-white p-6 rounded-lg shadow-sm mb-8 border-t-4 border-red-700">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Description & Evolution (ታሪክ)</h2>
-          <div className="space-y-4 text-gray-700 leading-relaxed">
-            <p className="text-lg">
-              ቴኳንዶ (Taekwon-Do) በሶስት ቃላት የተገነባ ነው - 
-              ቴ (Tae) ማለት በእግር መምታት፣ 
-              ኳን (Kwon) ማለት በቡጢ መምታት፣ 
-              ዶ (Do) ማለት ደግሞ የጥበብ መንገድ ማለት ነው።
-            </p>
-            <p>
-              ዘመናዊው ቴኳንዶ በ1955 ዓ.ም በጄነራል ቾይ ሆንግ ሂ የተመሰረተ ሲሆን፣ በውስጡም የሰው ልጅን እድገት የሚወክሉ 24 ቱል (Patterns) ይዟል።
-            </p>
+      <div className="flex flex-col md:row h-[calc(100vh-72px)]">
+        <div className="w-full md:w-1/2 bg-black flex items-center justify-center">
+          {pattern.video_url ? (
+            <iframe className="w-full aspect-video" src={pattern.video_url.replace("watch?v=", "embed/")} allowFullScreen></iframe>
+          ) : (
+            <div className="text-white text-center p-10">የቪዲዮ ሊንክ አልተገኘም</div>
+          )}
+        </div>
+        <div className="w-full md:w-1/2 p-8 overflow-y-auto bg-gray-50">
+          <h2 className="text-3xl font-bold text-red-700 mb-4 underline">Technical Description</h2>
+          <p className="text-gray-700 text-lg leading-relaxed">{pattern.meaning_am}</p>
+          <div className="mt-6 p-4 bg-white border-l-4 border-red-700 shadow-sm">
+            <p className="font-bold">የእንቅስቃሴ ብዛት (Moves): {pattern.move_count}</p>
           </div>
-        </section>
-
-        <h2 className="text-2xl font-bold text-gray-800 mb-4">The 24 Patterns (24ቱ ቱል)</h2>
-        <div className="grid gap-4">
-          {patterns?.map((tul) => (
-            <div key={tul.id} className="bg-white p-4 rounded-md shadow flex justify-between items-center border hover:border-red-500 transition-colors">
-              <div>
-                <span className="text-red-700 font-bold mr-3">{tul.order_no}.</span>
-                <span className="text-lg font-semibold">{tul.name_en}</span>
-                <span className="text-gray-400 mx-2">|</span>
-                <span className="text-gray-600">{tul.name_am}</span>
-              </div>
-              <div className="text-sm bg-gray-100 px-3 py-1 rounded-full text-gray-500">
-                {tul.move_count} Moves
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </main>
