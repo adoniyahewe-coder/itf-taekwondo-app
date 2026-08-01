@@ -4,20 +4,30 @@
 
 :root {
   --tkd-red: #b91c1c;
-  --tkd-black: #020617;
 }
 
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
-  font-family: 'Inter', sans-serif;
+  background-color: #000000;
+  color: #ffffff;
+  /* አፑ በስልክ ላይ እንዳይወዝወዝ (Fixed App Feel) */
+  overscroll-behavior-y: none;
+  font-family: sans-serif;
 }
 
-/* Premium Card Effect */
-.app-card {
-  @apply bg-white border border-slate-200 shadow-sm rounded-[2rem] transition-all duration-300 hover:shadow-xl hover:border-red-500 active:scale-95;
-}
-
+/* ለቴክኒክ መመሪያው (Scrollbar) */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* የአፕ ካርዶች ስታይል */
+.app-button {
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+}
+
+.app-button:active {
+  transform: scale(0.95);
+  background: #b91c1c;
 }
