@@ -2,15 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
 }
 
 body {
-  background-color: #000000;
-  color: #ffffff;
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* Makes it feel like a locked App, not a website */
+  background: black;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom button for Fitness App style */
+.fitness-card {
+  @apply bg-zinc-900/50 border border-white/10 backdrop-blur-md rounded-[2.5rem] p-8 
+         transition-all duration-300 active:scale-95 hover:border-red-600;
 }
