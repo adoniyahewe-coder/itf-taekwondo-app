@@ -4,47 +4,20 @@
 
 :root {
   --tkd-red: #b91c1c;
-  --tkd-black: #0f172a;
-  --tkd-gold: #fbbf24;
+  --tkd-black: #020617;
 }
 
-@layer base {
-  body {
-    @apply bg-slate-50 text-slate-900 antialiased overflow-x-hidden;
-    font-family: 'Inter', sans-serif;
-  }
+body {
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
 }
 
-@layer components {
-  /* High-end blur effect for cards */
-  .glass-effect {
-    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
-  }
-
-  /* Premium Buttons */
-  .btn-primary {
-    @apply relative overflow-hidden px-8 py-4 bg-red-700 text-white font-bold rounded-2xl 
-           transition-all duration-300 hover:bg-black hover:scale-105 active:scale-95 shadow-lg;
-  }
-
-  .btn-outline {
-    @apply px-8 py-4 border-2 border-slate-900 text-slate-900 font-bold rounded-2xl 
-           transition-all duration-300 hover:bg-slate-900 hover:text-white;
-  }
-
-  /* Section Title styling */
-  .section-title {
-    @apply text-4xl md:text-6xl font-black italic tracking-tighter uppercase;
-  }
+/* Premium Card Effect */
+.app-card {
+  @apply bg-white border border-slate-200 shadow-sm rounded-[2rem] transition-all duration-300 hover:shadow-xl hover:border-red-500 active:scale-95;
 }
 
-/* Custom Scrollbar for the Technical Manual */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  @apply bg-slate-100;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-red-700 rounded-full;
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
