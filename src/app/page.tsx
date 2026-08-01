@@ -1,65 +1,60 @@
-import { supabase } from '@/lib/supabaseClient';
 import Link from 'next/link';
 
-export default async function Home() {
-  const { data: patterns } = await supabase.from('patterns').select('*').order('order_no', { ascending: true });
-
+export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-white">
-      {/* Premium Header */}
-      <header className="bg-black text-white py-14 px-6 text-center border-b-8 border-red-700">
-        <h1 className="text-5xl font-black tracking-tighter italic">ITF ETHIOPIA</h1>
-        <p className="mt-2 text-red-500 font-bold tracking-widest uppercase text-sm">Official Technical Portal</p>
-      </header>
+    <main className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative h-[90vh] flex items-center justify-center text-white overflow-hidden bg-black">
+        <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=2000')] bg-cover bg-center" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black" />
+        
+        <div className="relative z-10 text-center px-6">
+          <h1 className="text-7xl md:text-9xl font-black italic tracking-tighter mb-4 animate-pulse">
+            ITF <span className="text-red-700">ETHIOPIA</span>
+          </h1>
+          <p className="text-xl md:text-2xl font-light tracking-[0.3em] mb-10 opacity-80">
+            የላቀ የቴኳንዶ ጥበብ መማሪያ
+          </p>
+          <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <Link href="/patterns" className="premium-btn bg-red-700 hover:bg-white hover:text-black">
+              Start Training (ቱል መለማመጃ)
+            </Link>
+            <Link href="/history" className="premium-btn border-2 border-white hover:bg-white hover:text-black">
+              Our History (ታሪክ)
+            </Link>
+          </div>
+        </div>
+      </section>
 
-      <div className="max-w-6xl mx-auto p-6">
-        {/* Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-12 mb-12">
-           <Link href="#history" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-red-700 hover:scale-105 transition-all text-center">
-             <span className="text-2xl block mb-2">📜</span>
-             <h3 className="font-bold">Evolution (ታሪክ)</h3>
-           </Link>
-           <Link href="/library" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-black hover:scale-105 transition-all text-center">
-             <span className="text-2xl block mb-2">🥋</span>
-             <h3 className="font-bold">Library (ቴክኒኮች)</h3>
-           </Link>
-           <Link href="#patterns" className="bg-white p-6 rounded-xl shadow-xl border-b-4 border-red-700 hover:scale-105 transition-all text-center">
-             <span className="text-2xl block mb-2">👊</span>
-             <h3 className="font-bold">24 Patterns (ቱል)</h3>
-           </Link>
+      {/* Quick Navigation Cards */}
+      <section className="max-w-7xl mx-auto -mt-20 relative z-20 px-6 grid grid-cols-1 md:grid-cols-3 gap-8 pb-20">
+        <div className="glass-card p-10 text-center group">
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-700 transition-colors">
+            <span className="text-4xl group-hover:scale-125 transition-transform">📜</span>
+          </div>
+          <h3 className="text-2xl font-black mb-4">Evolution</h3>
+          <p className="text-gray-500 mb-6 text-sm">የአይ.ቲ.ኤፍ ቴኳንዶ አመጣጥ እና ታሪክ</p>
+          <Link href="/history" className="text-red-700 font-bold hover:underline">Explore History →</Link>
         </div>
 
-        {/* History Section */}
-        <section id="history" className="mb-16 bg-gray-50 p-8 rounded-3xl border border-gray-100">
-          <h2 className="text-3xl font-black text-black mb-6 uppercase">ITF Evolution</h2>
-          <p className="text-gray-700 leading-relaxed text-lg italic border-l-4 border-red-700 pl-4">
-            "ቴኳንዶ ማለት በእግር መምታት (Tae)፣ በቡጢ መምታት (Kwon) እና የጥበብ መንገድ (Do) ማለት ነው።"
-          </p>
-          <p className="mt-4 text-gray-600">
-            ዘመናዊው አይ.ቲ.ኤፍ (ITF) ቴኳንዶ በ1955 ዓ.ም በጄነራል ቾይ ሆንግ ሂ የተመሰረተ ሲሆን... (Add more history here)
-          </p>
-        </section>
-
-        {/* Patterns List */}
-        <section id="patterns">
-          <h2 className="text-3xl font-black mb-8 uppercase text-center">The 24 Patterns</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {patterns?.map((p) => (
-              <Link key={p.id} href={`/patterns/${p.order_no}`}>
-                <div className="group bg-white border border-gray-200 p-5 rounded-lg hover:bg-black hover:text-white transition-all cursor-pointer">
-                  <div className="flex justify-between items-center">
-                    <span className="text-4xl font-black opacity-10 group-hover:opacity-100 transition-opacity">{p.order_no}</span>
-                    <div className="text-right">
-                      <h4 className="font-bold uppercase tracking-tighter">{p.name_en}</h4>
-                      <p className="text-xs text-red-600 font-bold">{p.name_am}</p>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
+        <div className="glass-card p-10 text-center group border-t-8 border-black">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-black transition-colors">
+            <span className="text-4xl group-hover:scale-125 transition-transform">🥋</span>
           </div>
-        </section>
-      </div>
+          <h3 className="text-2xl font-black mb-4">Patterns</h3>
+          <p className="text-gray-500 mb-6 text-sm">የ24ቱ ቱል ሙሉ መግለጫ እና ቪዲዮዎች</p>
+          <Link href="/patterns" className="text-red-700 font-bold hover:underline">View 24 Tul →</Link>
+        </div>
+
+        <div className="glass-card p-10 text-center group">
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-red-700 transition-colors">
+            <span className="text-4xl group-hover:scale-125 transition-transform">👊</span>
+          </div>
+          <h3 className="text-2xl font-black mb-4">Library</h3>
+          <p className="text-gray-500 mb-6 text-sm">መሰረታዊ አቋቋም እና የምት ዘዴዎች</p>
+          <Link href="/library" className="text-red-700 font-bold hover:underline">Open Manual →</Link>
+        </div>
+      </section>
     </main>
   );
 }
